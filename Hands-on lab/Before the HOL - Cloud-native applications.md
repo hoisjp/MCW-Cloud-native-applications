@@ -734,7 +734,7 @@ You should follow all steps provided _before_ performing the Hands-on lab.
 </div>
 
 <div class="MCWHeader3">
-2020 年 2 月
+2020 年 10 月
 </div>
 
 このドキュメントに記載されている情報 (URL や他のインターネット Web サイト参照を含む) は、将来予告なしに変更することがあります。別途記載されていない場合、このソフトウェアおよび関連するドキュメントで使用している会社、組織、製品、ドメイン名、電子メール アドレス、ロゴ、人物、場所、出来事などの名称は架空のものです。実在する商品名、団体名、個人名などとは一切関係ありません。お客様ご自身の責任において、適用されるすべての著作権関連法規に従ったご使用をお願いいたします。著作権法による制限に関係なく、マイクロソフトの書面による許可なしに、このドキュメントの一部または全部を複製したり、検索システムに保存または登録したり、別の形式に変換したりすることは、手段、目的を問わず禁じられています。ここでいう手段とは、複写や記録など、電子的、または物理的なすべての手段を含みます。
@@ -902,7 +902,7 @@ Azure リソース グループを作成し、このハンズオン ラボで作
 
      Azure で作成したリソースをすべて同じリージョンに配置するため、この情報を後のステップで使用します。そのため、リージョン名を忘れないようにしてください。
 
-   次のコマンド例は、「米国東部にあるeastusリージョンに fabmedical-solという名前のリソースグループを作成する」するもです。**solの部分は必ず各自で任意の値に変更**してください。
+   次のコマンド例は、「米国東部にあるeastusリージョンに fabmedical-solという名前のリソースグループを作成する」するものです。**solの部分は必ず各自で任意の値に変更**してください。
 
    ```bash
    az group create -l eastus -n fabmedical-sol
@@ -934,11 +934,11 @@ Azure リソース グループを作成し、このハンズオン ラボで作
 
 4. 画面の指示に従い、パスフレーズを入力します。**入力したパスフレーズは演習で利用します。必ず忘れないようにしてください。** 
 
-5. 「.ssh/fabmedical」と入力したので、ssh-keygen は、ユーザー フォルダーの「.ssh」フォルダーにファイルを生成します。既定では、Cloud Shell はこのフォルダーを開きます。
+5. 「.ssh/fabmedical」と入力したので、ssh-keygen は、ユーザー フォルダーの「.ssh」フォルダーにファイルを生成します。
 
    ![Azure Cloud Shell ウィンドウのこのスクリーンショットでは、ssh-keygen -t RSA -b 2048 -C admin@fabmedical が入力され、コマンド プロンプトで実行されており、ウィンドウには、生成されたキーに関する情報が表示されています。](media/b4-image57.png)
 
-6. Cloud Shell のコマンド ラインで以下のコマンドを入力し、公開キーの内容を出力します。後で使用できるよう、この情報をコピーします。
+6. Cloud Shell のコマンド ラインで以下のコマンドを入力し、公開キーの内容を出力します。この情報は後で使用しますのでメモしてください。
 
     ```bash
     cat .ssh/fabmedical.pub
@@ -957,6 +957,9 @@ Azure Kubernetes Service には、Azure API とやり取りをするために、
 1. 次のコマンドを実行してご自身のサブスクリプション ID を確認します。
    ```bash
     az account show
+    ```
+    コマンドを実行すると、次のような値が出力されます。
+    ```bash
     {
       "environmentName": "xxxxx",
       "homeTenantId": "xxxxxxx-xxxx-xxxx-xxxx-xxxx"
@@ -966,17 +969,23 @@ Azure Kubernetes Service には、Azure API とやり取りをするために、
    ```
    このコマンド結果の`id`の値が、「ご自身のサブスクリプション ID」 となります。
 
-   サービス プリンシパルを作成するには、Cloud Shell のコマンド ラインで以下のコマンドを入力します。{id} は上記の「ご自身のサブスクリプション ID」と置き換えます。サフィックスは、名前を一意のものとして扱うために選択したサフィックスと置き換えてください。
+   サービス プリンシパルを作成するには、Cloud Shell のコマンド ラインで以下のコマンドを入力します。{id} は上記の「ご自身のサブスクリプション ID」と置き換えます。{SUFFIX}は、タスク3-1でご自身で決めた任意のSUFFIXの値と置き換えてください。
 
    > **注**: Azure Cloud Shell が利用できない場合は、「[タスク 1: Azure Cloud Shell のセットアップ](#タスク-1-azure-cloud-shell-のセットアップ)」の項目に戻ります。
 
    ```bash
-   az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/{id}" --name="http://Fabmedical-sp-{SUFFIX}"
+   az ad sp create-for-rbac \
+      --role="Contributor" \
+      --scopes="/subscriptions/{id}" \
+      --name="http://Fabmedical-sp-{SUFFIX}"
    ```
-   たとえば、サービスプリンシパル IDが「12345678-9876-5432-1111-987654321」、任意のSUFFIXを「sol」と設定した場合、次のようなコマンドになります。**この2つの値はご自身の環境によって各自で異なります**ので、読み替えてコマンドを実行してください。
+   たとえば、サービスプリンシパル IDが「12345678-9876-5432-1111-987654321」、SUFFIXを「sol」と設定した場合、次のようなコマンドになります。**この2つの値はご自身の環境によって各自で異なります**ので、読み替えてコマンドを実行してください。
 
    ```bash
-   az ad sp create-for-rbac --role="Contributor" --scopes="/subscriptions/12345678-9876-5432-1111-987654321" --name="http://Fabmedical-sp-sol"
+   az ad sp create-for-rbac \
+      --role="Contributor" \
+      --scopes="/subscriptions/12345678-9876-5432-1111-987654321" \
+      --name="http://Fabmedical-sp-sol"
    ```
 
 
@@ -989,13 +998,13 @@ Azure Kubernetes Service には、Azure API とやり取りをするために、
    az ad sp show --id {appId} --query "{objectId:@.objectId}"
    ```
 
-   たとえば、手順2でサービスプリンシパルのAppIDが「"appId": "abcd1234-5678-efjk-9876-54321abc"」と出力された場合は、次のようになります。
+   たとえば、手順2でサービスプリンシパルのAppIDが「"appId": "abcd1234-5678-efjk-9876-54321abc"」と出力された場合は、コマンドは次のようになります。
 
    ```bash
    az ad sp show --id abcd1234-5678-efjk-9876-54321abc --query "{objectId:@.objectId}"
    ```
 
-4. コマンドにより、以下のような出力が生成されます。この情報は後で使用しますのでメモしてください。
+4. コマンドを実行すると、以下のような出力が生成されます。この情報は後で使用しますのでメモしてください。
 
    ![Bash ウィンドウのこのスクリーンショットでは、az ad sp show --id d41261a3-d8b8-4cf0-890d-1fb6efc20a67 --query "{objectId:@.objectId}" が入力され、コマンド プロンプトで実行されており、ウィンドウには、サービス プリンシパルの情報が表示されています。](media/b4-image58.png)
 
@@ -1005,7 +1014,7 @@ Azure Kubernetes Service には、Azure API とやり取りをするために、
 
 ![ARM](media/arm.png)
 
-1. Azure Cloud Shell で、以下のように、ARM テンプレートのディレクトリへ切り替えを行います。
+1. Azure Cloud Shell で、以下のコマンドを実行し、ARM テンプレートのディレクトリへ移動します。
 
    > **注**: Azure Cloud Shell が利用できない場合は、「[タスク 1: Azure Cloud Shell のセットアップ](#タスク-1-azure-cloud-shell-のセットアップ)」の項目に戻ります。
 
@@ -1025,18 +1034,18 @@ Azure Kubernetes Service には、Azure API とやり取りをするために、
 
    |                   設定値                   |                                                                                        説明                                                                                        |
    | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-   | **Suffix**                                 | 最大 3 文字で、ご自身で決めた任意のSUFFIXに変更します。**=>タスク3.1のSUFFIXを入力**                                                                                                                               |
+   | **Suffix**                                 | 最大 3 文字で、ご自身で決めた任意のSUFFIXに変更します。**=>タスク3-1のSUFFIXを入力**                                                                                                                               |
    | **VirtualMachineAdminUsernameLinux(ここは変更不要)**       | Linux ビルド エージェント VM 管理者のユーザー名 (`「adminfabmedical」`) をそのまま入力                                                                                                 |
-   | **VirtualMachineAdminPublicKeyLinux**      | Linux ビルド エージェント VM 管理者の SSH 公開キーを入力。この値は、前に作成した `.ssh/fabmedical.pub` ファイルにあります (例: `「ssh-rsa AAAAB3N(...)vPiybQV admin@fabmedical」`) **=>タスク4.6の.ssh/fabmedical.pubの値を入力**|
-   | **KubernetesServicePrincipalClientId**     | Kubernetes クラスター サービスのプリンシパル クライアント ID を入力。**=>タスク5.2の`appId`の値を入力**                                         |
-   | **KubernetesServicePrincipalClientSecret** | Kubernetes クラスター サービスのプリンシパル クライアント シークレットを入力。**=>タスク5.2の`password`の値を入力**                                |
-   | **KubernetesServicePrincipalObjectId**     | Kubernetes クラスター サービスのプリンシパル オブジェクト ID を入力。前のステップで使ったサービス プリンシパルの「objectId」を使用します。**=>タスク5.4の`objectId`の値を入力**                                       |
+   | **VirtualMachineAdminPublicKeyLinux**      | Linux ビルド エージェント VM 管理者の SSH 公開キーを入力。この値は、前に作成した `.ssh/fabmedical.pub` ファイルにあります (例: `「ssh-rsa AAAAB3N(...)vPiybQV admin@fabmedical」`) **=>タスク4-6の.ssh/fabmedical.pubの値を入力**|
+   | **KubernetesServicePrincipalClientId**     | Kubernetes クラスター サービスのプリンシパル クライアント ID を入力。**=>タスク5-2の`appId`の値を入力**                                         |
+   | **KubernetesServicePrincipalClientSecret** | Kubernetes クラスター サービスのプリンシパル クライアント シークレットを入力。**=>タスク5-2の`password`の値を入力**                                |
+   | **KubernetesServicePrincipalObjectId**     | Kubernetes クラスター サービスのプリンシパル オブジェクト ID を入力。前のステップで使ったサービス プリンシパルの「objectId」を使用します。**=>タスク5-4の`objectId`の値を入力**                                       |
    | **CosmosLocation**                         | Azure Cosmos DB のプライマリ拠点。前に作成したリソース グループと同じ拠点を使用します。(例: `「eastus」`)。                                                                        |
    | **CosmosLocationName**                     | Azure Cosmos DB のプライマリ拠点の名称。前に作成したリソース グループと同じ拠点の名称を使用します。(例: `「East US」`)。                                                           |
    | **CosmosPairedLocation**                   | Azure Cosmos DB のセカンダリ拠点。以下のリストの拠点を使用します。(例: `「westus」`)。                                                                                             |
    | **CosmosPairedLocationName**               | Azure Cosmos DB のセカンダリ拠点の名称。前のキーに定義したセカンダリ拠点に合致する拠点の名称を、以下のリストから選択します。(例: `「West US」`)。                                  |
    
-   ここでCosmoDBの設定可能な拠点は以下の通りです。
+   CosmoDBの設定可能な拠点は以下の通りです。
 
    | Location (拠点)    | Location Name (拠点の名称) |
    | ------------------ | ------------------- |
@@ -1080,7 +1089,7 @@ Azure Kubernetes Service には、Azure API とやり取りをするために、
    code azuredeploy.json
    ```
 
-Line 110:
+   編集する箇所は、Line 110 です。
    ```bash
    "kubernetesVersion": "1.17.11",
    ```
@@ -1088,12 +1097,18 @@ Line 110:
 7. 以下の命令 (大文字と小文字の区別あり) を入力し、必要なリソースを作成します。{resourceGroup} はタスク3で作成したリソース グループの名前と置き換えます。
 
    ```bash
-   az group deployment create --resource-group {resourceGroup} --template-file azuredeploy.json --parameters azuredeploy.parameters.json
+   az group deployment create \
+      --resource-group {resourceGroup} \
+      --template-file azuredeploy.json \
+      --parameters azuredeploy.parameters.json
    ```
 
    たとえば「fabmedical-sol」という名前のリソースグループに作成するときは次のコマンドになります。**solの部分は必ず各自で任意の値に変更**してください。
    ```bash
-   az group deployment create --resource-group fabmedical-sol --template-file azuredeploy.json --parameters azuredeploy.parameters.json
+   az group deployment create \
+      --resource-group fabmedical-sol \
+      --template-file azuredeploy.json \
+      --parameters azuredeploy.parameters.json
    ```
 
    このコマンドでラボの全リソースを展開する場合、完了するまでに 30 分から 60 分かかります。処理をそのままにして次のタスクに移ります。次は、Azure DevOps を設定します。
