@@ -1122,21 +1122,13 @@ FabMedical から、スターター ファイルが提供されています。�
 
 1. **新しい** Azure Cloud Shell コンソールを開きます。
 
+
 2. FabMedical のソース コード フォルダーに移動し、フォルダーの内容を一覧表示します。
 
    ```bash
    cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/infrastructure/
    ll
    ```
-
-   > **重要**: 上記の手順の代わりにラボの開発者向けエディションを利用する場合は、以下のコマンドを入力します。
-   >
-   > ```bash
-   > cd ~/MCW-Cloud-native-applications/Hands-on\ lab/lab-files/developer/
-   > ll
-   > ```
-   >
-   > このコマンドを実行すると、このラボのエディションで使用するバージョンのスターター ファイルに移動します。
 
 3. 以下のように、Web サイト用のフォルダー、コンテンツ API 用のフォルダー、API データ初期化用のフォルダーの 3 つが表示されます。
 
@@ -1179,51 +1171,43 @@ FabMedical から、スターター ファイルが提供されています。�
 
    ![プロジェクト作成のダイアログ。[Create (作成)] ボタンが矢印で示されている](media/b4-image51.png)
 
-8. 以下の手順でマルチステージ パイプラインを有効にします。
+8. 次に、Azure サービスの接続を、Azure DevOps アカウントに追加します。プロジェクトの設定の歯車アイコンを選択し、設定にアクセスします。次に、[Service connections (サービス接続)] を選択します。
 
-   - 右上のユーザー アイコンを選択します。
-   - 3 つのドットを選択して、[Preview Features (プレビュー機能)] メニュー アイテムにアクセスします。
-   - マルチステージ パイプラインを [On] に切り替えます。
-
-9. 次に、Azure サービスの接続を、Azure DevOps アカウントに追加します。プロジェクトの設定の歯車アイコンを選択し、設定にアクセスします。次に、[Service connections (サービス接続)] を選択します。
-
-10. [Create service connection (+ サービス接続を作成)] を選択します。次に、メニューから [Azure Resource Manager] を選択します。
+9. [Create service connection (+ サービス接続を作成)] を選択します。次に、メニューから [Azure Resource Manager] を選択します。
 
     ![Azure DevOps のスクリーンショット。ここでは、[Create service connection (+ サービス接続を作成)] が選択されており、Azure Resource Manager が強調表示されています。](media/vso-service-connection-settings-202004.png)
 
-11. [Service principal (manual)] を選択し、詳細設定にアクセスします。
+10. [Service principal (manual)] を選択し、詳細設定にアクセスします。
 
     ![[Add an Azure Resource Manager service connection (Azure Resource Manager サービス接続の追加)] ダイアログのスクリーンショット。ここでは、サブスクリプション情報を入力します。](media/vso-service-connection-settings2-202004.png)
 
-12. 前に作成したサービス プリンシパルの情報を使用して、必要な情報を入力します
-    。
+11. 前に作成したサービス プリンシパルの情報を使用して、必要な情報を入力します。
 
     - **接続名**: azurecloud
     - **環境**: AzureCloud
     - **スコープ レベル**: Subscription
-    - **サブスクリプション ID**: `az account show` で出力された `ID` を入力。
-    - **サブスクリプション名**: `az account show` で出力された`名前`を入力。
-    - **サービス プリンシパル クライアント ID**: サービス プリンシパルから出力した `AppID` を入力します。
-    - **サービス プリンシパル キー**: サービス プリンシパルから出力した`パスワード`を入力します。
-    - **テナント ID**: サービス プリンシパルから出力した`テナント`を入力します。
+    - **サブスクリプション ID**: `az account show` で出力された `id` を入力。**=>タスク1-3の`id`の値を入力**
+    - **サブスクリプション名**: `az account show` で出力された`name`を入力。**=>タスク1-3の`name`の値を入力**
+    - **サービス プリンシパル クライアント ID**: サービス プリンシパルから出力した `AppID` を入力します。**=>タスク5-2の`appId`の値を入力**
+    - **サービス プリンシパル キー**: サービス プリンシパルから出力した`パスワード`を入力します。**=>タスク5-2の`password`の値を入力**
+    - **テナント ID**: サービス プリンシパルから出力した`テナント`を入力します。**=>タスク5-2の`tenant`の値を入力**
 
     ![Add an Azure Resource Manager service connection (Azure Resource Manager サービス接続の追加) ダイアログのスクリーンショット。](media/Ex1-Task7.16.png)
 
-13. [Verify connection (接続の確認)]、[OK] の順に選択します。
+12. [Verify connection (接続の確認)]、[OK] の順に選択します。
 
     > **注**: 接続の確認ができないときは、再度チェックを行い、必要なデータを再入力します。
 
-14. 次に、別の Azure サービスの接続を、Azure DevOps アカウントに追加します。
+13. 次に、別の Azure サービスの接続を、Azure DevOps アカウントに追加します。
     プロジェクトの設定の歯車アイコンを選択し、設定にアクセスします。次に、
     [Service connections (サービス接続)] を選択します。
 
-15. [+ New service connection (+ 新しいサービス接続)] を選択します。メニューから [Docker Registry (Docker レジストリ)] を
+14. [+ New service connection (+ 新しいサービス接続)] を選択します。メニューから [Docker Registry (Docker レジストリ)] を
     選択します。
 
     ![[Add a Docker Registry service connection (Docker Registry サービス接続の追加)] ダイアログのスクリーンショット。](media/hol-2019-10-01_20-30-17.png)
 
-16. 前に作成したサービス プリンシパルの情報を使用して、必要な情報を入力します
-    。
+15. 前に作成したサービス プリンシパルの情報を使用して、必要な情報を入力します。
 
     - **環境**: Azure Container Registry
 
@@ -1235,9 +1219,9 @@ FabMedical から、スターター ファイルが提供されています。�
 
     ![[Add a Docker Registry service connection (Docker Registry サービス接続の追加)] ダイアログのスクリーンショット。上記で説明した値が入力されています。](media/hol-2019-10-01_20-33-05.png)
 
-17. [OK] を選択します。
+16. [OK] を選択します。
 
-18. 次に、[Repos (リポジトリ)] を選択し、リポジトリのドロップダウンから
+17. 次に、[Repos (リポジトリ)] を選択し、リポジトリのドロップダウンから
     [+ New repository (+ 新規リポジトリ)] を選択し、新しいリポジトリを作成します。
 
     ![リポジトリのドロップダウンが表示され、[+ New repository (+ 新規リポジトリ)] アイテムが選択されています。](media/b4-image53.png)
@@ -1248,9 +1232,9 @@ FabMedical から、スターター ファイルが提供されています。�
 
     ![[Clone to your computer (コンピューターへのクローンの作成)] セクションが表示され、[Generate Git credentials (Git 資格情報を生成)] ボタンが選択されています。](media/b4-image50.png)
 
-19. 個人用アクセス トークンをコピーし、後で使用できるよう保存します。
+18. 個人用アクセス トークンをコピーし、後で使用できるよう保存します。
 
-20. Cloud Shell ウィンドウで、`content-web` 用の git リポジトリを新たに初期化します。
+19. Cloud Shell ウィンドウで、`content-web` 用の git リポジトリを新たに初期化します。
 
     ```bash
     cd content-web
@@ -1259,7 +1243,7 @@ FabMedical から、スターター ファイルが提供されています。�
     git commit -m "Initial Commit"
     ```
 
-21. [Azure DevOps] タブに戻ります。  
+20. [Azure DevOps] タブに戻ります。  
 [Clone] ボタンをクリックして、プッシュ用の新規リモートとして Azure DevOps リポジトリを追加するコマンドをコピーします。以下の例のように、「**HTTPS**」用のコマンドをコピーします。
 
     ```bash
@@ -1267,13 +1251,13 @@ FabMedical から、スターター ファイルが提供されています。�
     git push -u origin --all
     ```
 
-22. Azure DevOps からコピーしたコマンドを使用してリモート リポジトリを構成し、Azure DevOps にコードをプッシュします。パスワードの入力を求められたら、このタスクで前にコピーした Azure DevOps の個人用アクセス トークンを貼り付けます。
+21. Azure DevOps からコピーしたコマンドを使用してリモート リポジトリを構成し、Azure DevOps にコードをプッシュします。パスワードの入力を求められたら、このタスクで前にコピーした Azure DevOps の個人用アクセス トークンを貼り付けます。
 
-23. Azure DevOps に戻り、リポジトリのドロップダウンで、「`content-api`」という名前の 2 つ目のリポジトリを作成します。
+22. Azure DevOps に戻り、リポジトリのドロップダウンで、「`content-api`」という名前の 2 つ目のリポジトリを作成します。
 
     > 注: Git 資格情報を再度生成する必要はありません。どちらのリポジトリにも同じ PAT が使用できます。
 
-24. Cloud Shell ウィンドウで、`content-api` ディレクトリの git リポジトリを新たに初期化します。
+23. Cloud Shell ウィンドウで、`content-api` ディレクトリの git リポジトリを新たに初期化します。
 
     ```bash
     cd ../content-api
@@ -1282,16 +1266,16 @@ FabMedical から、スターター ファイルが提供されています。�
     git commit -m "Initial Commit"
     ```
 
-25. プッシュ用の新規リモートとして `content-api` リポジトリを追加するコマンドをコピーします。「**HTTPS**」用のコマンドをコピーします。
+24. プッシュ用の新規リモートとして `content-api` リポジトリを追加するコマンドをコピーします。「**HTTPS**」用のコマンドをコピーします。
 
-26. Azure DevOps からコピーしたコマンドを使用してリモート リポジトリを構成し、Azure DevOps にコードをプッシュします。パスワードの入力を求められたら、このタスクで前にコピーした Azure DevOps の個人用アクセス トークンを貼り付けます。
+25. Azure DevOps からコピーしたコマンドを使用してリモート リポジトリを構成し、Azure DevOps にコードをプッシュします。パスワードの入力を求められたら、このタスクで前にコピーした Azure DevOps の個人用アクセス トークンを貼り付けます。
 
-27. リポジトリのドロップダウンで、「`content-init`」という名前の 3 つ目のリポジトリを
+26. リポジトリのドロップダウンで、「`content-init`」という名前の 3 つ目のリポジトリを
     作成します。
 
     > 注: Git 資格情報を再度生成する必要はありません。どちらのリポジトリにも同じ PAT が使用できます。
 
-28. Cloud Shell ウィンドウで、`content-init` ディレクトリの git リポジトリを新たに初期化します。
+27. Cloud Shell ウィンドウで、`content-init` ディレクトリの git リポジトリを新たに初期化します。
 
     ```bash
     cd ../content-init
@@ -1300,9 +1284,9 @@ FabMedical から、スターター ファイルが提供されています。�
     git commit -m "Initial Commit"
     ```
 
-29. プッシュ用の新規リモートとして `content-init` リポジトリを追加するコマンドをコピーします。「**HTTPS**」用のコマンドをコピーします。
+28. プッシュ用の新規リモートとして `content-init` リポジトリを追加するコマンドをコピーします。「**HTTPS**」用のコマンドをコピーします。
 
-30. Azure DevOps からコピーしたコマンドを使用してリモート リポジトリを構成し、Azure DevOps にコードをプッシュします。パスワードの入力を求められたら、このタスクで前にコピーした Azure DevOps の個人用アクセス トークンを貼り付けます。
+29. Azure DevOps からコピーしたコマンドを使用してリモート リポジトリを構成し、Azure DevOps にコードをプッシュします。パスワードの入力を求められたら、このタスクで前にコピーした Azure DevOps の個人用アクセス トークンを貼り付けます。
 
 ### タスク 8: ビルド エージェントとのセキュアな接続 <a name="タスク-8-ビルド-エージェントとのセキュアな接続"></a>
 
@@ -1354,7 +1338,7 @@ ARM 環境の実行時にプロビジョニングされたビルド エージェ
 
 4. 接続の認証を確認できなくても、接続の確認を求められたときは、「yes」と入力します。
 
-5. 前に作成した公開キーのパスフレーズを求められたときは、この値を入力します。
+5. 前に作成した公開キーのパスフレーズを求められたときは入力します。**=>タスク4-4で入力した値を入力**
 
 6. SSH が VM と接続し、以下のようなコマンド プロンプトが表示されます。Cloud Shell ウィンドウは次のステップで使用するので、オープンのままにします。
 
