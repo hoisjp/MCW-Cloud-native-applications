@@ -1226,7 +1226,7 @@ FabMedical から、スターター ファイルが提供されています。�
 
     ![リポジトリのドロップダウンが表示され、[+ New repository (+ 新規リポジトリ)] アイテムが選択されています。](media/b4-image53.png)
 
-    - リポジトリ名として「content-web」と入力します。
+    - リポジトリ名として「content-web」と入力します。ここで、`Add a README`のチェックをはずしておきます。
 
     - Azure DevOps でリポジトリが作成されたら、[Clone] ボタンをクリックして、[Generate Git credentials (Git 資格情報を生成)] を選択します。
 
@@ -1234,7 +1234,7 @@ FabMedical から、スターター ファイルが提供されています。�
 
 18. 個人用アクセス トークンをコピーし、後で使用できるよう保存します。
 
-19. Cloud Shell ウィンドウで、`content-web` 用の git リポジトリを新たに初期化します。
+19. ブラウザの[Cloud Shell]タブに移動し、`content-web` 用の git リポジトリを新たに初期化します。
 
     ```bash
     cd content-web
@@ -1243,7 +1243,7 @@ FabMedical から、スターター ファイルが提供されています。�
     git commit -m "Initial Commit"
     ```
 
-20. [Azure DevOps] タブに戻ります。  
+20. ブラウザの[Azure DevOps] タブに戻ります。  
 [Clone] ボタンをクリックして、プッシュ用の新規リモートとして Azure DevOps リポジトリを追加するコマンドをコピーします。以下の例のように、「**HTTPS**」用のコマンドをコピーします。
 
     ```bash
@@ -1251,7 +1251,7 @@ FabMedical から、スターター ファイルが提供されています。�
     git push -u origin --all
     ```
 
-21. Azure DevOps からコピーしたコマンドを使用してリモート リポジトリを構成し、Azure DevOps にコードをプッシュします。パスワードの入力を求められたら、このタスクで前にコピーした Azure DevOps の個人用アクセス トークンを貼り付けます。
+21. Azure DevOps からコピーしたコマンドを使用してリモート リポジトリを構成し、Azure DevOps にコードをプッシュします。パスワードの入力を求められたら、タスク7-18でコピーした Azure DevOps の個人用アクセス トークンを貼り付けます。
 
 22. Azure DevOps に戻り、リポジトリのドロップダウンで、「`content-api`」という名前の 2 つ目のリポジトリを作成します。
 
@@ -1268,7 +1268,7 @@ FabMedical から、スターター ファイルが提供されています。�
 
 24. プッシュ用の新規リモートとして `content-api` リポジトリを追加するコマンドをコピーします。「**HTTPS**」用のコマンドをコピーします。
 
-25. Azure DevOps からコピーしたコマンドを使用してリモート リポジトリを構成し、Azure DevOps にコードをプッシュします。パスワードの入力を求められたら、このタスクで前にコピーした Azure DevOps の個人用アクセス トークンを貼り付けます。
+25. Azure DevOps からコピーしたコマンドを使用してリモート リポジトリを構成し、Azure DevOps にコードをプッシュします。パスワードの入力を求められたら、タスク7-18でコピーした Azure DevOps の個人用アクセス トークンを貼り付けます。
 
 26. リポジトリのドロップダウンで、「`content-init`」という名前の 3 つ目のリポジトリを
     作成します。
@@ -1286,12 +1286,11 @@ FabMedical から、スターター ファイルが提供されています。�
 
 28. プッシュ用の新規リモートとして `content-init` リポジトリを追加するコマンドをコピーします。「**HTTPS**」用のコマンドをコピーします。
 
-29. Azure DevOps からコピーしたコマンドを使用してリモート リポジトリを構成し、Azure DevOps にコードをプッシュします。パスワードの入力を求められたら、このタスクで前にコピーした Azure DevOps の個人用アクセス トークンを貼り付けます。
+29. Azure DevOps からコピーしたコマンドを使用してリモート リポジトリを構成し、Azure DevOps にコードをプッシュします。パスワードの入力を求められたら、タスク7-18でコピーした  Azure DevOps の個人用アクセス トークンを貼り付けます。
 
 ### タスク 8: ビルド エージェントとのセキュアな接続 <a name="タスク-8-ビルド-エージェントとのセキュアな接続"></a>
 
-このセクションでは、新規のビルド エージェント VM との接続を検証します
-。
+このセクションでは、新規のビルド エージェント VM との接続を検証します。
 
 このワークショップではアプリのコンテナ化や動作確認などをAzure VMを使ったビルドマシンで行います。ここでは、このビルドマシンへの接続とセットアップを行います。
 
@@ -1305,13 +1304,13 @@ ARM 環境の実行時にプロビジョニングされたビルド エージェ
    > **注**: Azure Cloud Shell が利用できない場合は、「[タスク 1: Azure Cloud Shell のセットアップ](#タスク-1-azure-cloud-shell-のセットアップ)」の項目に戻ります。
 
    ```bash
-   az vm show -d -g fabmedical-[SUFFIX] -n fabmedical-[SHORTssh  SUFFIX] --query publicIps -o tsv
+   az vm show -d -g fabmedical-[SUFFIX] -n fabmedical-[SUFFIX] --query publicIps -o tsv
    ```
 
    例
 
    ```bash
-   az vm show -d -g fabmedical-sol -n fabmedical-SOL --query publicIps -o tsv
+   az vm show -d -g fabmedical-sol -n fabmedical-sol --query publicIps -o tsv
    ```
 
 2. この VM のパブリック IP アドレスを Cloud Shell の出力からメモします。
@@ -1354,38 +1353,42 @@ ARM 環境の実行時にプロビジョニングされたビルド エージェ
 
 1. ビルド エージェント VM との SSH 接続が確立している Cloud Shell ウィンドウに移動します。
 
-2. 以下のような単一行のコマンドを入力し、HTTPS 経由にて 1 回で、Ubuntu パッケージのアップデートと、リポジトリに対応する cURL およびサポートのインストールを行います。続行するか確認を求められた場合は、「Y」と入力して、Enter を押します。
+2. 以下のコマンドを入力し、HTTPS 経由にて 1 回で、Ubuntu パッケージのアップデートと、リポジトリに対応する cURL およびサポートのインストールを行います。続行するか確認を求められた場合は、「Y」と入力して、Enter を押します。
 
    ```bash
    sudo apt-get update && sudo apt install apt-transport-https ca-certificates curl software-properties-common
    ```
 
-3. 以下のような単一行のコマンドを入力して、Docker の公式の GPG キーを追加します。
+3. 以下のコマンドを入力して、Docker の公式の GPG キーを追加します。
 
    ```bash
    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
    ```
 
-4. 以下のような単一行のコマンドを入力して、Docker の信頼できるリポジトリを Ubuntu パッケージのリストに追加します。
+4. 以下のコマンドを入力して、Docker の信頼できるリポジトリを Ubuntu パッケージのリストに追加します。
 
    ```bash
    sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
    ```
 
-5. NodeJS LTS リリースを使用する NodeJs PPA の追加、Ubuntu パッケージのアップグレード、Docker エンジン、node.js、ノード パッケージ マネージャーのインストールを、以下のコマンドを入力して行います。それぞれのコマンドは、1 行ずつ入力します。続行するか確認を求められた場合は、「Y」と入力して、Enter を押します。
+5. Node.js LTS リリースを使用する Node.js PPA の追加、Ubuntu パッケージのアップグレード、Docker エンジン、node.js、ノード パッケージ マネージャーのインストールを、以下のコマンドを入力して行います。それぞれのコマンドは、1 行ずつ入力します。続行するか確認を求められた場合は、「Y」と入力して、Enter を押します。
 
    ```bash
-   sudo apt-get install curl python-software-properties
+   sudo apt-get install -y curl python-software-properties
+   ```
 
+   ```bash
    curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-
+   ```
+   
+   ```bash
    sudo apt-get update && sudo apt-get install -y docker-ce nodejs mongodb-clients
    ```
 
-6. 以下のような単一行のコマンドを入力して、Ubuntu パッケージを最新のバージョンにアップグレードします。続行するか確認を求められた場合は、「Y」と入力して、Enter を押します。
+6. 以下のコマンドを入力して、Ubuntu パッケージを最新のバージョンにアップグレードします。続行するか確認を求められた場合は、「Y」と入力して、Enter を押します。
 
    ```bash
-   sudo apt-get upgrade
+   sudo apt-get -y upgrade
    ```
 
 7. `docker-compose` をインストールします。
@@ -1403,7 +1406,7 @@ ARM 環境の実行時にプロビジョニングされたビルド エージェ
 
    ![Azure Cloud Shell ウィンドウのこのスクリーンショットでは、docker version が入力され、コマンド プロンプトで実行されており、ウィンドウには、Docker のバージョン情報が表示されています。](media/b4-image28.png)
 
-9. node.js や npm のバージョンを確認するだけであれば、以下のコマンドでチェックできます。
+9. Node.js や npm のバージョンを確認するときは、以下のコマンドでチェックできます。
 
    ```bash
    nodejs --version
@@ -1430,6 +1433,9 @@ ARM 環境の実行時にプロビジョニングされたビルド エージェ
 
 13. Docker のバージョンを確認するコマンドを再度実行し、出力された内容をメモします。今度はサーバーのバージョンも表示されます。
 
+     ```bash
+     docker version
+     ```
     ![Azure Cloud Shell ウィンドウのこのスクリーンショットでは、docker version が入力され、コマンド プロンプトで実行されており、ウィンドウには、サーバーのバージョン情報と Docker のバージョン情報が表示されています。](media/b4-image30.png)
 
 14. 以下に示す複数の Docker のコマンドを実行します。
@@ -1463,7 +1469,7 @@ ARM 環境の実行時にプロビジョニングされたビルド エージェ
    git config --global user.name "Your Name"
    ```
 
-   > **注**: いくつかのケースでは、`ルート` ユーザーには、そのユーザー固有の `.config` フォルダーがあります。この場合、以下のコマンドで所有権を `adminfabmedical` に戻し、再度、`git` コマンドを実行します。
+   > **注**: いくつかのケースでは、`root` ユーザーには、そのユーザー固有の `.config` フォルダーがあります。この場合、以下のコマンドで所有権を `adminfabmedical` に戻し、再度、`git` コマンドを実行します。
 
    ```bash
    sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
@@ -1476,7 +1482,7 @@ ARM 環境の実行時にプロビジョニングされたビルド エージェ
    git config --global credential.helper cache
    ```
 
-   > **注**: いくつかのケースでは、`ルート` ユーザーには、そのユーザー固有の `.config` フォルダーがあります。この場合、以下のコマンドで所有権を `adminfabmedical` に戻し、再度、`git` コマンドを実行します。
+   > **注**: いくつかのケースでは、`root` ユーザーには、そのユーザー固有の `.config` フォルダーがあります。この場合、以下のコマンドで所有権を `adminfabmedical` に戻し、再度、`git` コマンドを実行します。
 
    ```bash
    sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
@@ -1495,13 +1501,13 @@ ARM 環境の実行時にプロビジョニングされたビルド エージェ
    git clone <REPOSITORY_URL>
    ```
 
-   > **注**: いくつかのケースでは、`ルート` ユーザーには、そのユーザー固有の `.config` フォルダーがあります。この場合、以下のコマンドで所有権を `adminfabmedical` に戻し、再度、`git` コマンドを実行します。
+   > **注**: いくつかのケースでは、`root` ユーザーには、そのユーザー固有の `.config` フォルダーがあります。この場合、以下のコマンドで所有権を `adminfabmedical` に戻し、再度、`git` コマンドを実行します。
 
    ```bash
    sudo chown -R $USER:$(id -gn $USER) /home/adminfabmedical/.config
    ```
 
-6. パスワードの入力を求められたら、前のステップで使用した PTA トークンを入力します。
+6. パスワードの入力を求められたら、前のステップで使用した Azure Repos のPTA トークンを入力します。
 
 7. ブラウザーで、`content-api` リポジトリに切り替え、[Clone (複製)] を選択し、リポジトリの URL を確認してコピーします。
 
@@ -1515,7 +1521,7 @@ ARM 環境の実行時にプロビジョニングされたビルド エージェ
 > オープンのままにします。ラボの指示に従い、必要に応じて追加の Azure Cloud Shell セッションを
 > 開きます。
 
-ハンズオン ラボを始める_前_に、リハーサルとしてこのセクションで説明した手順すべてを実際に確認しておくようお勧めします。
+ハンズオン ラボを始める前に、リハーサルとしてこのセクションで説明した手順すべてを実際に確認しておくようお勧めします。
 
 [logo]: https://github.com/Microsoft/MCW-Template-Cloud-Workshop/raw/master/Media/ms-cloud-workshop.png
 [devops]: https://azure.microsoft.com/ja-jp/services/devops/?nav=min
